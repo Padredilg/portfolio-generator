@@ -1,15 +1,7 @@
-// //we want to use fs methods
-// const fs = require('fs');
+const fs = require('fs');
 const inquirer = require('inquirer');
-// //module.exports assignment in the page-template file will be reassigned to this generate page const
-// const generatePage = require('./src/page-template.js');
-
-// //use the inputs in the template literal and write that to index.html
-// fs.writeFile('./index.html', generatePage(name, github), err => {//stops if error, otherwise notifies success in terminal
-//   if (err) throw new Error(err);
-
-//   console.log('Portfolio complete! Check out index.html to see the output!');
-// });
+//module.exports assignment in the page-template file will be reassigned to this generate page const
+const generatePage = require('./src/page-template.js');
 
 const promptUser = () => {
   return inquirer.prompt([
@@ -160,5 +152,11 @@ Add a New Project
 promptUser()
   .then(promptProject)
   .then(portfolioData => {
-    console.log(portfolioData)
+    const pageHTML = generatePage(portfolioData);
+
+    fs.writeFile('./index.html', pageHTML, err => {//stops if error, otherwise notifies success in terminal
+      if (err) throw new Error(err);
+
+      console.log('Page created! Check out index.html in this directory to see it!');
+    });
   });
