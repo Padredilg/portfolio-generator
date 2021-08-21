@@ -1,7 +1,8 @@
-const fs = require('fs');
 const inquirer = require('inquirer');
 //module.exports assignment in the page-template file will be reassigned to this generate page const
 const generatePage = require('./src/page-template.js');
+const { writeFile, copyFile } = require('./utils/generate-site.js');
+
 
 const promptUser = () => {
   return inquirer.prompt([
