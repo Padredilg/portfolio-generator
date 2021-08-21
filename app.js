@@ -152,11 +152,18 @@ Add a New Project
 promptUser()
   .then(promptProject)
   .then(portfolioData => {
-    const pageHTML = generatePage(portfolioData);
-
-    fs.writeFile('./index.html', pageHTML, err => {//stops if error, otherwise notifies success in terminal
-      if (err) throw new Error(err);
-
-      console.log('Page created! Check out index.html in this directory to see it!');
-    });
+    return generatePage(portfolioData);
+  })
+  .then(pageHTML => {//pageHTML has value = generatePage(portfolioData)
+    return writeFile(pageHTML);
+  })
+  .then(writeFileResponse => {
+    console.log(writeFileResponse);
+    return copyFile();
+  })
+  .then(copyFileResponse => {
+    console.log(copyFileResponse);
+  })
+  .catch(err => {
+    console.log(err);
   });
